@@ -2,9 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const connectDB = require('./src/config/dbConfig');
 require('dotenv').config();
 const env  = process.env;
+const { requireAuth } = require('./src/middleware/authMiddleware');
 const authRouter = require('./src/routes/authRouter');
 const userRouter = require('./src/routes/userRouter');
 const emailRouter = require('./src/routes/emailRouter');
@@ -18,13 +20,17 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
+app.use(cookieParser());
 
 // Connect to MongoDB database
 connectDB();
 
 
 // Define routes
-// app.use('/api/auth', authRouter);
+app.use('/api/auth', authRouter);
+app.get('/7masa', requireAuth, (req, res) => res.json({
+    message: "ahlen 7mada"
+}));
 // app.use('/api/users', userRouter);
 // app.use('/api/emails', emailRouter);
 // app.use('/api/calendar', calendarRouter);
