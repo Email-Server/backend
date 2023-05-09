@@ -1,0 +1,17 @@
+{
+  "name": "email_server_project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "description": "",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "mongoose": "^7.1.0",
+    "nodemon": "^2.0.22"
+  }
+}
