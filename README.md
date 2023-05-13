@@ -1,11 +1,13 @@
 # Scheduler requests
+
 ### to send
->``api--> [serverUrl]/api/schedule/send``
->
->``method: POST``
->
->``body:``
-``{
+```
+api--> [serverUrl]/api/schedule/send
+
+method: POST
+
+body:
+{
    "organizerEmail":"example@any.com",
    "attendeeEmail":"example@any.com",
    "title":"title",
@@ -13,25 +15,25 @@
    "end":"05/12/2023, 05:50:52 PM",
    "description":"description",
    "location":"location"
-}``
->
->``required:"organizerEmail"&"attendeeEmail"&"title"&"start"&"end"``
->
->``response: 'request sent successfully!'``
->````
+}
+
+required:"organizerEmail"&"attendeeEmail"&"title"&"start"&"end"
+
+response: 'request sent successfully!' 
+```
+
+
 
 ### to receive
->``api--> [serverUrl]/api/schedule/receive``
->
->``method: POST``
->
->``body:``
-``{
-    "attendeeEmail":"example@any.com"
-  } --->required (user email)``
->
->``response:``
-``[
+```api--> [serverUrl]/api/schedule/receive
+
+method: POST
+
+body:
+{"attendeeEmail":"example@any.com"} --->required (user email)
+
+response:
+[
     {
         "_id": "645ebac0eb49c77f1364171d",
         "organizerEmail": "example@any.com",
@@ -42,49 +44,43 @@
         "approved": "notYet",
         "received": true
     }
-``]
->
->``possible values for "approved" are "yes","no","notYet"``
->``scheduler will be moved to calender only when "approved":"yes"``
->````
+]
+
+possible values for "approved" are "yes","no","notYet"
+scheduler will be moved to calender only when "approved":"yes"
+```
 
 ### to approve
->``api--> [serverUrl]/api/schedule/approve``
->
->``method: POST``
->
->``body:``
-``{
-    "schedulerId":"645ebac0eb49c77f1364171d"
-  } --->required``
->
->``response: 'schedule was approved successfully!'``
->````
+```api--> [serverUrl]/api/schedule/approve
+
+method: POST
+
+body:
+{"schedulerId":"645ebac0eb49c77f1364171d"} --->required
+
+response: 'schedule was approved successfully!'
+```
 
 ### to ignore
->``api--> [serverUrl]/api/schedule/ignore``
->
->``method: POST``
->
->``body:``
-``{
-    "schedulerId":"645ebac0eb49c77f1364171d"
-  } --->required``
->
->``response: 'scheduler was ignored successfully!'``
->````
+```api--> [serverUrl]/api/schedule/ignore
+
+method: POST
+
+body:
+{"schedulerId":"645ebac0eb49c77f1364171d"} --->required
+
+response: 'scheduler was ignored successfully!'
+```
 
 ### to remove
->``api--> [serverUrl]/api/schedule/remove``
->
->``method: POST``
->
->``body:``
-``{
-    "schedulerId":"645ebac0eb49c77f1364171d"
-  }`` ------>required
->
->``response: 'scheduler was deleted successfully!'``
->````
+```api--> [serverUrl]/api/schedule/remove
+
+method: POST
+
+body:
+{"schedulerId":"645ebac0eb49c77f1364171d"}`` ------>required
+
+response: 'scheduler was deleted successfully!'
+```
 
 ---
