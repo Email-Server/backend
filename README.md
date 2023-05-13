@@ -25,7 +25,8 @@ response: 'request sent successfully!'
 
 
 ### to receive
-```api--> [serverUrl]/api/schedule/receive
+```
+api--> [serverUrl]/api/schedule/receive
 
 method: POST
 
@@ -51,7 +52,8 @@ scheduler will be moved to calender only when "approved":"yes"
 ```
 
 ### to approve
-```api--> [serverUrl]/api/schedule/approve
+```
+api--> [serverUrl]/api/schedule/approve
 
 method: POST
 
@@ -62,7 +64,8 @@ response: 'schedule was approved successfully!'
 ```
 
 ### to ignore
-```api--> [serverUrl]/api/schedule/ignore
+```
+api--> [serverUrl]/api/schedule/ignore
 
 method: POST
 
@@ -73,7 +76,8 @@ response: 'scheduler was ignored successfully!'
 ```
 
 ### to remove
-```api--> [serverUrl]/api/schedule/remove
+```
+api--> [serverUrl]/api/schedule/remove
 
 method: POST
 
