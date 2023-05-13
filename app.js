@@ -1,3 +1,5 @@
+const Joi = require("joi");
+Joi.objectId = require("joi-objectid")(Joi);
 const logger = require("./src/config/logger");
 const express = require("express");
 require("dotenv").config();
@@ -7,6 +9,7 @@ const authRouter = require("./src/routes/authRouter");
 const userRouter = require("./src/routes/userRouter");
 const emailRouter = require("./src/routes/emailRouter");
 const calendarRouter = require("./src/routes/calendarRouter");
+const scheduleRouter = require("./src/routes/scheduleRouter");
 
 //handel unexpected exceptions or unhandled rejections
 require("./src/startup/errorHandler")();
@@ -22,14 +25,10 @@ require("./src/config/dbConfig")();
 
 // Define routes
 app.use("/api/auth", authRouter);
-app.get("/7masa", requireAuth, (req, res) =>
-  res.json({
-    message: "ahlen 7mada",
-  })
-);
 // app.use('/api/users', userRouter);
 // app.use('/api/emails', emailRouter);
-// app.use('/api/calendar', calendarRouter);
+app.use("/api/calendar", calendarRouter);
+app.use("/api/schedule", scheduleRouter);
 
 // Start the server
 const PORT = env.PORT || 5000;
