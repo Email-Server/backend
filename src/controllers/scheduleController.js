@@ -129,6 +129,8 @@ exports.approve = async (req, res) => {
       aCalendar = await aCalendar.save();
     }
 
+    await Scheduler.findByIdAndDelete(req.body.schedulerId);
+
     return res.send("schedule was approved successfully!");
   } catch (error) {
     logger("error", `${error}`);
