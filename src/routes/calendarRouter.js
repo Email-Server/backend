@@ -1,15 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const Calendar = require("../models/calendar");
-const logger = require("../config/logger");
+const { get, remove } = require("../controllers/calendarController");
 
-router.post("/me", async (req, res) => {
-  try {
-    const calendar = await Calendar.find({ user: req.body.id });
-    res.send(calendar);
-  } catch (error) {
-    logger("error", `${error}`);
-  }
-});
+router.post("/get", get);
+router.post("/remove", remove);
 
 module.exports = router;

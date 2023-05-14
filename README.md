@@ -100,3 +100,60 @@ response: 'scheduler was deleted successfully!'
 ```
 
 ---
+
+# Calendar requests
+
+### to get
+
+```
+api--> [serverUrl]/api/calendar/get
+
+method: POST
+
+body:
+{"email":"example@any.com"} --->required
+
+response:
+[
+    {
+        "_id": "646036922d0524ea6a260ed4",
+        "user": "example@any.com",
+        "title": "Title1",
+        "description": "",
+        "start": "2023-05-11T22:00:00.000Z",
+        "end": "2023-05-12T15:50:52.000Z",
+        "organizerEmail": "example@any.com",
+        "location": "",
+        "attendees": [
+            "example@any.com",
+            "example@any.com"
+        ]
+    },
+    {
+        "_id": "6460448d1eb4bfaaa4a96bd7",
+        "user": "example@any.com",
+        "title": "Title2",
+        "description": "",
+        "start": "2023-05-11T22:00:00.000Z",
+        "end": "2023-05-12T15:50:52.000Z",
+        "organizerEmail": "example@any.com",
+        "location": "",
+        "attendees": [
+            "example@any.com"
+        ]
+    }
+]
+```
+
+### to remove
+```
+api--> [serverUrl]/api/calendar/remove
+
+method: POST
+
+body:
+{"calendarId":"6460448d1eb4bfaaa4a96bd7"} --->required
+
+response: 'calendar deleted successfully!'
+```
+---
