@@ -39,29 +39,38 @@ exports.send = async (req, res) => {
 ////////////////////////////////////////////////////////////////////////!
 exports.receive = async (req, res) => {
   const schema = Joi.object({
-    attendeeEmail: Joi.string().email().required(),
+    email: Joi.string().email().required(),
   });
 
   const { error } = schema.validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   try {
-    const attendee = await User.findOne({ email: req.body.attendeeEmail });
+    const attendee = await User.findOne({ email: req.body.email });
     if (!attendee) return res.status(404).send("no user with such email");
 
     let schedules = await Scheduler.find({
-      attendeeEmail: req.body.attendeeEmail,
+      $or: [
+        { attendeeEmail: req.body.email },
+        { organizerEmail: req.body.email },
+      ],
     }).select("-timestamps");
-    if (!schedules)
-      return res.status(404).send("no schedule requests for this user");
+    if (!schedules) return res.status(404).send("no schedules for this user");
 
-    let newSchedules = schedules.map((schedule) => {
+    const sentSchedules = schedules.filter(
+      (schedule) => schedule.organizerEmail === req.body.email
+    );
+
+    const receivedSchedules = schedules.filter(
+      (schedule) => schedule.attendeeEmail === req.body.email
+    );
+    let newReceivedSchedules = receivedSchedules.map((schedule) => {
       schedule.received = true;
       schedule.save();
       return schedule;
     });
 
-    return res.send(newSchedules);
+    return res.send({ sent: sentSchedules, received: newReceivedSchedules });
   } catch (error) {
     logger("error", `${error}`);
   }

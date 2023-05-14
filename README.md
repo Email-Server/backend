@@ -22,8 +22,6 @@ required:"organizerEmail"&"attendeeEmail"&"title"&"start"&"end"
 response: 'request sent successfully!' 
 ```
 
-
-
 ### to receive
 ```
 api--> [serverUrl]/api/schedule/receive
@@ -31,21 +29,35 @@ api--> [serverUrl]/api/schedule/receive
 method: POST
 
 body:
-{"attendeeEmail":"example@any.com"} --->required (user email)
+{"email":"example@any.com"} --->required (user email)
 
 response:
-[
-    {
-        "_id": "645ebac0eb49c77f1364171d",
-        "organizerEmail": "example@any.com",
-        "attendeeEmail": "example@any.com",
-        "title": "Title",
-        "start": "2023-05-11T22:00:00.000Z",
-        "end": "2023-05-12T15:50:52.000Z",
-        "approved": "notYet",
-        "received": true
-    }
-]
+{
+    "sent": [
+        {
+            "_id": "646037332d0524ea6a260ee5",
+            "organizerEmail": "example@any.com",
+            "attendeeEmail": "example@any.com",
+            "title": "Title1",
+            "start": "2023-05-11T22:00:00.000Z",
+            "end": "2023-05-12T15:50:52.000Z",
+            "approved": "notYet",
+            "received": false,
+        }
+    ],
+    "received": [
+        {
+            "_id": "646036712d0524ea6a260ecc",
+            "organizerEmail": "example@any.com",
+            "attendeeEmail": "example@any.com",
+            "title": "Title1",
+            "start": "2023-05-11T22:00:00.000Z",
+            "end": "2023-05-12T15:50:52.000Z",
+            "approved": "notYet",
+            "received": true,
+        }
+    ]
+}
 
 possible values for "approved" are "yes","no","notYet"
 scheduler will be moved to calender only when "approved":"yes"
