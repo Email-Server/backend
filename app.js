@@ -10,7 +10,7 @@ const userRouter = require("./src/routes/userRouter");
 const emailRouter = require("./src/routes/emailRouter");
 const calendarRouter = require("./src/routes/calendarRouter");
 const scheduleRouter = require("./src/routes/scheduleRouter");
-
+const feedbackRouter = require("./src/routes/feedbackRouter");
 //handel unexpected exceptions or unhandled rejections
 require("./src/startup/errorHandler")();
 
@@ -29,7 +29,7 @@ app.use("/api/auth", authRouter);
 // app.use('/api/emails', emailRouter);
 app.use("/api/calendar", calendarRouter);
 app.use("/api/schedule", scheduleRouter);
-
+app.use("/api/feedback", feedbackRouter);
 // Start the server
 const PORT = env.PORT || 5000;
 app.listen(PORT, () => {
