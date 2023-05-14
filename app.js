@@ -30,6 +30,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/calendar", calendarRouter);
 app.use("/api/schedule", scheduleRouter);
 app.use("/api/feedback", feedbackRouter);
+app.use("/api/mail", userRouter);
 // Start the server
 const PORT = env.PORT || 5000;
 app.listen(PORT, () => {
