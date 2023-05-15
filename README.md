@@ -229,7 +229,7 @@ body:
 ```
 api --> [serverurl]/api/auth/login
 
-method: GET
+method: POST
 
 body:
 
