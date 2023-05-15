@@ -207,3 +207,34 @@ body{
 }
 type :patch
 ```
+
+
+### to register
+```
+api --> [serverurl]/api/auth/register 
+
+method: POST
+
+body:
+
+{
+    "email": "ahmed@hubmail.tech",
+    "password": "123",
+    "firstName": "ahmed",
+    "lastName": "elsellamy",
+    "birthdate": "2001-01-10"
+}
+```
+### to login
+```
+api --> [serverurl]/api/auth/login
+
+method: GET
+
+body:
+
+{
+    "email": "ahmed@hamada.com",
+    "password": "123"
+}
+```
