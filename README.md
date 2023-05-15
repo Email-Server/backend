@@ -157,3 +157,53 @@ body:
 response: 'calendar deleted successfully!'
 ```
 ---
+
+
+### to send mail 
+```
+  here to use it : machine host/api/mail/send
+  body 
+  
+{
+    "from":"fady@gmail.com",
+    "to":"ahmed@hamada.com",
+    "subject":"zeus12",
+    "body":"zeus",
+    "userID":"6460d67675e81fff3b365459"
+   
+
+}
+
+here theeres the manatory fileds and user id means the sender id 
+type : post
+```
+
+### to recive mail 
+```
+  here to use it : machine host/api/mail/recive
+  body 
+  {
+    "mail":"fady@gmail.com",
+    "number":2
+}
+here number refer to the page so if number was 1 he will recive latest 10  if 2 will 
+recive the second older 10 mails and so on 
+type : post
+
+```
+
+
+### to set status 
+```
+
+
+apiurl: machine host/api/feedback/msgread/email_id
+
+body{
+    "isRead":"true",
+     "isStarred":"true",
+    "isImportant":"true"
+
+}
+type :patch
+```
