@@ -96,7 +96,7 @@ type : post
 
 
 exports.receiveMail = function (req, res, next) {
-  const mail = req.body.mail;
+  const mail = req.body.email;
   const num = req.body.number;
   const isImportant =req.body.isImportant;
   const isStarred =req.body.isStarred; 
@@ -106,7 +106,7 @@ exports.receiveMail = function (req, res, next) {
   // Create a query object with the "to" field set to `mail`.
   // If `isImportant` or `isStarred` are specified in the request body,
   // add them to the query object as well.
-  let queryObj = { to: mail };
+  let queryObj = { to: email };
   if (isImportant !== undefined) {
     queryObj.isImportant = isImportant;
   }
