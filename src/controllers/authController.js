@@ -43,6 +43,9 @@ exports.register = async (req, res) => {
       res.cookie("jwt", token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 });
       res.status(201).json({
         message: "User registered successfully",
+        name: user.firstName + " " + user.lastName,
+        email,
+        id: user._id,
       });
     }
 
