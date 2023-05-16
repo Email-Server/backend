@@ -5,24 +5,7 @@ const Email = require('../models/email');
 
 
 
-  /* ************************************************************************
-
-  here to use it : machine host/api/mail/send
-  body 
-  
-{
-    "from":"fady@gmail.com",
-    "to":"ahmed@hamada.com",
-    "subject":"zeus12",
-    "body":"zeus",
-    "userID":"6460d67675e81fff3b365459"
-   
-
-}
-
-here theeres the manatory fileds and user id means the sender id 
-type : post
-  ***********************************************************************************/
+ 
  
 
 exports.sendMail = async function (req, res, next) {
@@ -96,7 +79,7 @@ type : post
 
 
 exports.receiveMail = function (req, res, next) {
-  const email = req.body.mail;
+  const email = req.body.email;
   const num = req.body.number;
   const isImportant =req.body.isImportant;
   const isStarred =req.body.isStarred; 
