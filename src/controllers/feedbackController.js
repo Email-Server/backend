@@ -41,12 +41,12 @@ exports.msgread = async (req, res, next) => {
   
       // If the update did not modify any documents, throw an error
       if (result.nModified <= 0) {
-        throw new Error("Failed to update mail read status");
+        throw new Error("Failed to update mail  status");
       }
   
       // Return a success response
       res.status(200).json({
-        message: "Mail read status updated successfully",
+        message: "Mail  status updated successfully",
       });
     } catch (error) {
       // If an error occurs during the update process, return a 500 response with an error message

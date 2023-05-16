@@ -42,6 +42,7 @@ exports.sendMail = async function (req, res, next) {
       subject: req.body.subject,
       body: req.body.body,
       user: req.body.userID,
+      labels:req.body.label
     });
 
     // Find sender and receiver
@@ -94,39 +95,55 @@ type : post
   *****************************************************************************************/
 
 
-  exports.receiveMail = function (req, res, next) {
-    const mail = req.body.mail;
-    const num = req.body.number;
-    const limit = req.query.limit || 10; // default limit is 10
-    const sort = req.query.sort || '-createdAt'; // default sort is by createdAt in descending order
-    
-    Email.find({ to: mail })
-      .sort(sort)
-      .then((receiver) => {
-        if (receiver.length === 0) { 
-          return res.status(404).json({
-            message: "Empty box",
-          });
-        }
-    
-        const startIndex = (num - 1) * limit;
-        const endIndex = startIndex + limit;
-  
-        const pagedReceiver = receiver.slice(startIndex, endIndex);
-  
-        res.status(200).json({
-          status: "success",
-          count: pagedReceiver.length,
-          receiver: pagedReceiver,
+exports.receiveMail = function (req, res, next) {
+  const mail = req.body.mail;
+  const num = req.body.number;
+  const isImportant =req.body.isImportant;
+  const isStarred =req.body.isStarred; 
+  const limit = req.query.limit || 10; // default limit is 10
+  const sort = req.query.sort || '-createdAt'; // default sort is by createdAt in descending order
+
+  // Create a query object with the "to" field set to `mail`.
+  // If `isImportant` or `isStarred` are specified in the request body,
+  // add them to the query object as well.
+  let queryObj = { to: mail };
+  if (isImportant !== undefined) {
+    queryObj.isImportant = isImportant;
+  }
+  if (isStarred !== undefined) {
+    queryObj.isStarred = isStarred;
+  }
+
+  Email.find(queryObj)
+    .sort(sort)
+    .then((receiver) => {
+      if (receiver.length === 0) { 
+        return res.status(404).json({
+          message: "Empty box",
         });
-      })
-      .catch((error) => {
-        res.status(500).json({
-          message: "Internal server error",
-          error: error,
-        });
+      }
+  
+      const startIndex = (num - 1) * limit;
+      const endIndex = startIndex + limit;
+
+      const pagedReceiver = receiver.slice(startIndex, endIndex);
+
+      res.status(200).json({
+        status: "success",
+        count: Math.ceil(receiver.length/limit), // calculate and send the count by dividing the length by the limit and then rounding up to the nearest integer
+        receiver: pagedReceiver,
       });
-  };
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: "Internal server error",
+        error: error,
+      });
+    });
+};
+
+
+
   
   
 
