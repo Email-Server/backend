@@ -17,7 +17,7 @@ type :patch
 exports.msgread = async (req, res, next) => {
     // Extract the required information from the request body
     const mailID  = req.params.id;
-    const {isRead,isStarred,isImportant} = req.body;
+    const {isRead,isStarred,isImportant,isSnoozed} = req.body;
     try {
       // Find the email document with the given ID
       const email = await Email.findOne({ _id: mailID });
@@ -33,7 +33,8 @@ exports.msgread = async (req, res, next) => {
       const updatedEmail = {
         isRead: isRead,
         isStarred:isStarred,
-        isImportant:isImportant
+        isImportant:isImportant,
+        isSnoozed:isSnoozed
       };
   
       // Update the email document in the database

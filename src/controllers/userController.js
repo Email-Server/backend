@@ -76,25 +76,27 @@ here number refer to the page so if number was 1 he will recive latest 10  if 2 
 recive the second older 10 mails and so on 
 type : post
   *****************************************************************************************/
-
-
 exports.receiveMail = function (req, res, next) {
   const email = req.body.email;
   const num = req.body.number;
-  const isImportant =req.body.isImportant;
-  const isStarred =req.body.isStarred; 
+  const isSnoozed = req.body.isSnoozed;
+  const isImportant = req.body.isImportant;
+  const isStarred = req.body.isStarred; 
   const limit = req.query.limit || 10; // default limit is 10
   const sort = req.query.sort || '-createdAt'; // default sort is by createdAt in descending order
 
   // Create a query object with the "to" field set to `mail`.
-  // If `isImportant` or `isStarred` are specified in the request body,
-  // add them to the query object as well.
   let queryObj = { to: email };
-  if (isImportant !== undefined) {
-    queryObj.isImportant = isImportant;
+
+  // Add additional checks for isImportant, isStarred and isSnoozed
+  if (isImportant === true) {
+    queryObj.isImportant = true;
   }
-  if (isStarred !== undefined) {
-    queryObj.isStarred = isStarred;
+  if (isStarred === true) {
+    queryObj.isStarred = true;
+  }
+  if (isSnoozed !== undefined) {
+    queryObj.isSnoozed = isSnoozed;
   }
 
   Email.find(queryObj)
@@ -124,6 +126,8 @@ exports.receiveMail = function (req, res, next) {
       });
     });
 };
+
+
 
 
 

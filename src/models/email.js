@@ -42,6 +42,10 @@ const emailSchema = new Schema({
         type: Boolean,
         default: false
       },
+      isSnoozed: {
+        type: Boolean,
+        default: false
+      },
       user: {
         type: Schema.Types.ObjectId,
         ref: 'User',
