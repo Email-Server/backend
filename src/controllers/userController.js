@@ -96,7 +96,7 @@ type : post
 
 
 exports.receiveMail = function (req, res, next) {
-  const mail = req.body.email;
+  const email = req.body.mail;
   const num = req.body.number;
   const isImportant =req.body.isImportant;
   const isStarred =req.body.isStarred; 
