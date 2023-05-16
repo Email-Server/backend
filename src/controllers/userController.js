@@ -25,7 +25,7 @@ exports.sendMail = async function (req, res, next) {
       subject: req.body.subject,
       body: req.body.body,
       user: req.body.userID,
-      labels:req.body.label
+      title:req.body.title
     });
 
     // Find sender and receiver

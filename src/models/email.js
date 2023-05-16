@@ -47,8 +47,8 @@ const emailSchema = new Schema({
         ref: 'User',
         required: true
       },
-      labels: [{
-        type: Schema.Types.ObjectId,
+      title: [{
+        type:String,
         ref: 'Label'
       }],
       scheduled: {
