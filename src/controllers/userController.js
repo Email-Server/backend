@@ -132,7 +132,57 @@ exports.receiveMail = function (req, res, next) {
 
 
   
+exports.issend = function (req, res, next) {
+  const email = req.body.email;
+  const num = req.body.number;
+  const isSnoozed = req.body.isSnoozed;
+  const isImportant = req.body.isImportant;
+  const isStarred = req.body.isStarred; 
+  const limit = req.query.limit || 10; // default limit is 10
+  const sort = req.query.sort || '-createdAt'; // default sort is by createdAt in descending order
+
+  // Create a query object with the "to" field set to `mail`.
+  let queryObj = { from: email };
+
+  // Add additional checks for isImportant, isStarred and isSnoozed
+  // if (isImportant === true) {
+  //   queryObj.isImportant = true;
+  // }
+  // if (isStarred === true) {
+  //   queryObj.isStarred = true;
+  // }
+  // if (isSnoozed !== undefined) {
+  //   queryObj.isSnoozed = isSnoozed;
+  // }
+
+  Email.find(queryObj)
+    .sort(sort)
+    .then((receiver) => {
+      if (receiver.length === 0) { 
+        return res.status(404).json({
+          message: "Empty box",
+        });
+      }
   
+      const startIndex = (num - 1) * limit;
+      const endIndex = startIndex + limit;
+
+      const pagedReceiver = receiver.slice(startIndex, endIndex);
+
+      res.status(200).json({
+        status: "success",
+        count: Math.ceil(receiver.length/limit), // calculate and send the count by dividing the length by the limit and then rounding up to the nearest integer
+        receiver: pagedReceiver,
+      });
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: "Internal server error",
+        error: error,
+      });
+    });
+};
+
 
   
   
