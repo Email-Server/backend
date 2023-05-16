@@ -47,10 +47,10 @@ const emailSchema = new Schema({
         ref: 'User',
         required: true
       },
-      title: [{
+      title: {
         type:String,
         ref: 'Label'
-      }],
+      },
       scheduled: {
         type: Date
       },
