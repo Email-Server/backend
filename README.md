@@ -301,6 +301,24 @@ required: all
 
 response: 'contact has been removed successfully!'
 ```
+
+### to edit
+```
+api--> [serverUrl]/api/contacts/edit
+
+method: POST
+
+body:
+{
+    "userEmail": "example@any.com",
+    "contactName": "abdullah",
+    "contactEmail": "example@any.com"
+}
+
+required: all
+
+response: 'contact has been updated successfully!'
+```
 ---
 
 ### to send mail 

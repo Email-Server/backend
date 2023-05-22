@@ -19,6 +19,11 @@ exports.add = async (req, res) => {
     let user = await User.findOne({ email: req.body.userEmail });
     if (!user) return res.status(404).send("no user with that userEmail");
 
+    if (
+      user.contacts.find((contact) => contact.email === req.body.contactEmail)
+    )
+      return res.send("user already exists");
+
     user.contacts = [
       ...user.contacts,
       { name: req.body.contactName, email: req.body.contactEmail },
@@ -76,6 +81,45 @@ exports.remove = async (req, res) => {
     );
 
     return res.send("contact has been removed successfully!");
+  } catch (error) {
+    logger("error", `${error}`);
+  }
+};
+
+//////////////////////////////////////////////////////////////////////!
+exports.edit = async (req, res) => {
+  const schema = Joi.object({
+    userEmail: Joi.string().email().required(),
+    contactEmail: Joi.string().email().required(),
+    contactName: Joi.string().required(),
+  });
+  const { error } = schema.validate(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+  try {
+    const user = await User.findOne({ email: req.body.userEmail });
+    if (!user) return res.status(404).send("no user with that userEmail");
+
+    if (
+      !user.contacts.find((contact) => contact.email === req.body.contactEmail)
+    )
+      return res.send("contact does not exist");
+
+    let newContacts = user.contacts.filter(
+      (contact) => contact.email !== req.body.contactEmail
+    );
+
+    newContacts.push({
+      name: req.body.contactName,
+      email: req.body.contactEmail,
+    });
+
+    const newUser = await User.findOneAndUpdate(
+      { email: req.body.userEmail },
+      { contacts: newContacts },
+      { new: true }
+    );
+
+    return res.send("contact has been updated successfully!");
   } catch (error) {
     logger("error", `${error}`);
   }
