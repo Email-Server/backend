@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -6,19 +6,19 @@ const userSchema = new Schema({
     type: String,
     required: true,
     unique: true,
-    lowercase: true
+    lowercase: true,
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
   firstName: {
     type: String,
-    required: true
+    required: true,
   },
   lastName: {
     type: String,
-    required: true
+    required: true,
   },
   birthdate: {
     type: Date,
@@ -26,19 +26,23 @@ const userSchema = new Schema({
   },
   signature: {
     type: String,
-    default: ""
+    default: "",
   },
   isVerified: {
     type: Boolean,
-    default: false
+    default: false,
+  },
+  contacts: {
+    type: Array,
+    default: [],
   },
   verificationToken: String,
   resetToken: String,
   resetTokenExpiration: Date,
   timestamp: {
     type: Date,
-    default: Date.now
-},
+    default: Date.now,
+  },
 });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model("User", userSchema);

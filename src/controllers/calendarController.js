@@ -45,3 +45,58 @@ exports.remove = async (req, res) => {
     logger("error", `${err}`);
   }
 };
+
+//////////////////////////////////////////////////////////////////////!
+exports.create = async (req, res) => {
+  const schema = Joi.object({
+    email: Joi.string().email().required(),
+    title: Joi.string().required(),
+    start: Joi.date().required(),
+    end: Joi.date().required(),
+    location: Joi.string(),
+    description: Joi.string(),
+  });
+  const { error } = schema.validate(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+  const calendar = new Calendar({
+    user: req.body.email,
+    title: req.body.title,
+    start: req.body.start,
+    end: req.body.end,
+    organizerEmail: req.body.email,
+    location: req.body.location,
+    description: req.body.description,
+  });
+  try {
+    const saved = await calendar.save();
+    return res.send("calendar created successfully!");
+  } catch (err) {
+    logger("error", `${err}`);
+  }
+};
+
+//////////////////////////////////////////////////////////////////////!
+exports.edit = async (req, res) => {
+  const schema = Joi.object({
+    id: Joi.objectId().required(),
+    title: Joi.string().required(),
+    start: Joi.date().required(),
+    end: Joi.date().required(),
+    location: Joi.string(),
+    description: Joi.string(),
+  });
+  const { error } = schema.validate(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+
+  try {
+    const calendar = await Calendar.findByIdAndUpdate(req.body.id, req.body, {
+      new: true,
+    }).select("-__v -timestamps");
+
+    if (!calendar) return res.status(404).send("calendar not found");
+
+    return res.send(calendar);
+  } catch (err) {
+    logger("error", `${err}`);
+  }
+};

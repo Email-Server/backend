@@ -1,15 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const {
-  get,
-  remove,
-  create,
-  edit,
-} = require("../controllers/calendarController");
+const { add, get, remove } = require("../controllers/conactsListController");
 
+router.post("/add", add);
 router.post("/get", get);
 router.post("/remove", remove);
-router.post("/create", create);
-router.post("/edit", edit);
 
 module.exports = router;

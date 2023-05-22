@@ -11,6 +11,7 @@ const emailRouter = require("./src/routes/emailRouter");
 const calendarRouter = require("./src/routes/calendarRouter");
 const scheduleRouter = require("./src/routes/scheduleRouter");
 const feedbackRouter = require("./src/routes/feedbackRouter");
+const contactsListRouter = require("./src/routes/contactList");
 //handel unexpected exceptions or unhandled rejections
 require("./src/startup/errorHandler")();
 
@@ -29,6 +30,7 @@ app.use("/api/auth", authRouter);
 // app.use('/api/emails', emailRouter);
 app.use("/api/calendar", calendarRouter);
 app.use("/api/schedule", scheduleRouter);
+app.use("/api/contacts", contactsListRouter);
 app.use("/api/feedback", feedbackRouter);
 app.use("/api/mail", userRouter);
 // Start the server

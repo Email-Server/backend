@@ -56,6 +56,7 @@ exports.validateScheduler = function (data) {
     start: Joi.date().required(),
     end: Joi.date().required(),
     approved: Joi.string().valid("no", "yes", "notYet"),
+    description: Joi.string(),
     received: Joi.boolean(),
   });
 

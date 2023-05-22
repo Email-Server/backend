@@ -194,3 +194,30 @@ exports.remove = async (req, res) => {
     logger("error", `${error}`);
   }
 };
+
+//////////////////////////////////////////////////////////////////////////////!
+exports.edit = async (req, res) => {
+  const schema = Joi.object({
+    id: Joi.objectId().required(),
+    attendeeEmail: Joi.string().email().required(),
+    title: Joi.string().min(3).max(30).required(),
+    start: Joi.date().required(),
+    end: Joi.date().required(),
+    description: Joi.string(),
+    received: Joi.boolean(),
+  });
+  const { error } = schema.validate(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+
+  try {
+    let scheduler = await Scheduler.findByIdAndUpdate(req.body.id, req.body, {
+      new: true,
+    }).select("-__v -timestamps");
+
+    if (!scheduler) return res.status(404).send("no scheduler with such id");
+
+    return res.send(scheduler);
+  } catch (err) {
+    logger("error", `${err}`);
+  }
+};

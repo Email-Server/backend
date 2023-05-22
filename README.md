@@ -99,6 +99,38 @@ body:
 response: 'scheduler was deleted successfully!'
 ```
 
+### to edit
+```
+api--> [serverUrl]/api/schedule/edit
+
+method: POST
+
+body:
+{
+    "id": "646aa9d26f33701bde377326",      <---scheduleId
+    "attendeeEmail": "example@any.com",
+    "title": "edited schedule",
+    "start": "2023-05-25T15:50:52.000Z",
+    "end": "2023-05-25T15:50:52.000Z",
+    "received":false
+}
+
+required: "id"&"attendeeEmail"&"title"&"start"&"end"
+
+response: 
+{
+    "_id": "646aa9d26f33701bde377326",
+    "organizerEmail": "example@any.com",
+    "attendeeEmail": "example@any.com",
+    "title": "edited schedule",
+    "start": "2023-05-25T15:50:52.000Z",
+    "end": "2023-05-25T15:50:52.000Z",
+    "approved": "notYet",
+    "received": false
+}
+
+```
+
 ---
 
 # Calendar requests
@@ -156,8 +188,120 @@ body:
 
 response: 'calendar deleted successfully!'
 ```
----
 
+### to create
+```
+api--> [serverUrl]/api/calendar/create
+
+method: POST
+
+body:
+{
+    "email": "example@any.com",
+    "title": "create new calendar",
+    "start": "05/15/2023, 05:50:52 PM",
+    "end": "05/15/2023, 05:50:52 PM",
+    "location": "zagazig",
+    "description":"new description"
+}
+
+required: "email"&"title"&"start"&"end"
+
+response: 'calendar created successfully!'
+```
+
+### to edit
+```
+api--> [serverUrl]/api/calendar/edit
+
+method: POST
+
+body:
+{
+    "id": "646aa528a7e9f61705f636c9",
+    "title": "edited calendar",
+    "start": "2023-05-22T15:50:52.000Z",
+    "end": "2023-05-22T15:50:52.000Z",
+    "location":"zagazig",
+    "description": "description"
+}
+
+required: "id"&"title"&"start"&"end"
+
+response:
+{
+    "_id": "646aa528a7e9f61705f636c9",
+    "user": "example@any.com",
+    "title": "edited calendar",
+    "start": "2023-05-22T15:50:52.000Z",
+    "end": "2023-05-22T15:50:52.000Z",
+    "organizerEmail": "example@any.com",
+    "location": "zagazig",
+    "attendees": [],
+    "description": "description"
+}
+```
+
+---
+# Contacts List
+
+### to add
+```
+api--> [serverUrl]/api/contacts/add
+
+method: POST
+
+body:
+{
+    "userEmail": "example@any.com",
+    "contactName": "ahmed",
+    "contactEmail": "example@any.com"
+}
+
+required: all
+
+response: 'contact has been added successfully!'
+```
+
+### to get 
+```
+api--> [serverUrl]/api/contacts/get
+
+method: POST
+
+body:
+{"email":"example@any.com"}  --->required
+
+response: 
+[
+    {
+        "name": "ahmed",
+        "email": "example@any.com"
+    },
+    {
+        "name": "ali",
+        "email": "example@any.com"
+    }
+]
+```
+
+### to remove
+```
+api--> [serverUrl]/api/contacts/remove
+
+method: POST
+
+body:
+{
+    "userEmail":"example@any.com",
+    "contactEmail":"example@any.com"
+}
+
+required: all
+
+response: 'contact has been removed successfully!'
+```
+---
 
 ### to send mail 
 ```
