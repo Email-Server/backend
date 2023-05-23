@@ -1,19 +1,12 @@
-const User = require('../models/user');
-const Email = require('../models/email');
-
-
-
-
-
- 
- 
+const User = require("../models/user");
+const Email = require("../models/email");
 
 exports.sendMail = async function (req, res, next) {
   try {
     // Validate input
     if (!req.body.from || !req.body.to || !req.body.subject || !req.body.body) {
       return res.status(400).json({
-        message: 'Missing required fields'
+        message: "Missing required fields",
       });
     }
 
@@ -25,46 +18,44 @@ exports.sendMail = async function (req, res, next) {
       subject: req.body.subject,
       body: req.body.body,
       user: req.body.userID,
-      title:req.body.title
+      title: req.body.title,
     });
 
     // Find sender and receiver
     const [sender, receiver] = await Promise.all([
       User.findOne({ email: req.body.from }),
-      User.findOne({ email: req.body.to })
+      User.findOne({ email: req.body.to }),
     ]);
 
     if (!sender) {
       return res.status(404).json({
-        message: 'Sender not found'
+        message: "Sender not found",
       });
     }
 
     if (!receiver) {
       return res.status(404).json({
-        message: 'Receiver not found'
+        message: "Receiver not found",
       });
     }
-    
+
     // Save email
     await student.save();
 
     res.status(200).json({
-      status: 'success'
+      status: "success",
     });
   } catch (error) {
     console.error(error);
 
     res.status(500).json({
-      message: 'Internal server error',
-      error: error.message
+      message: "Internal server error",
+      error: error.message,
     });
   }
 };
 
-
-
-  /* ************************************************************************************
+/* ************************************************************************************
 
   here to use it : machine host/api/mail/recive
   body 
@@ -79,15 +70,20 @@ type : post
 exports.receiveMail = function (req, res, next) {
   const email = req.body.email;
   const num = req.body.number;
+  const issend = req.body.isSend;
   const isSnoozed = req.body.isSnoozed;
   const isImportant = req.body.isImportant;
-  const isStarred = req.body.isStarred; 
+  const isStarred = req.body.isStarred;
   const limit = req.query.limit || 10; // default limit is 10
-  const sort = req.query.sort || '-createdAt'; // default sort is by createdAt in descending order
+  const sort = req.query.sort || "-createdAt"; // default sort is by createdAt in descending order
 
   // Create a query object with the "to" field set to `mail`.
-  let queryObj = { to: email };
-
+  let queryObj = {};
+  if (issend === true) {
+    queryObj.from = email;
+  } else {
+    queryObj.to = email;
+  }
   // Add additional checks for isImportant, isStarred and isSnoozed
   if (isImportant === true) {
     queryObj.isImportant = true;
@@ -102,12 +98,12 @@ exports.receiveMail = function (req, res, next) {
   Email.find(queryObj)
     .sort(sort)
     .then((receiver) => {
-      if (receiver.length === 0) { 
+      if (receiver.length === 0) {
         return res.status(404).json({
           message: "Empty box",
         });
       }
-  
+
       const startIndex = (num - 1) * limit;
       const endIndex = startIndex + limit;
 
@@ -115,7 +111,7 @@ exports.receiveMail = function (req, res, next) {
 
       res.status(200).json({
         status: "success",
-        count: Math.ceil(receiver.length/limit), // calculate and send the count by dividing the length by the limit and then rounding up to the nearest integer
+        count: Math.ceil(receiver.length / limit), // calculate and send the count by dividing the length by the limit and then rounding up to the nearest integer
         receiver: pagedReceiver,
       });
     })
@@ -127,19 +123,14 @@ exports.receiveMail = function (req, res, next) {
     });
 };
 
-
-
-
-
-  
 exports.issend = function (req, res, next) {
   const email = req.body.email;
   const num = req.body.number;
   const isSnoozed = req.body.isSnoozed;
   const isImportant = req.body.isImportant;
-  const isStarred = req.body.isStarred; 
+  const isStarred = req.body.isStarred;
   const limit = req.query.limit || 10; // default limit is 10
-  const sort = req.query.sort || '-createdAt'; // default sort is by createdAt in descending order
+  const sort = req.query.sort || "-createdAt"; // default sort is by createdAt in descending order
 
   // Create a query object with the "to" field set to `mail`.
   let queryObj = { from: email };
@@ -158,12 +149,12 @@ exports.issend = function (req, res, next) {
   Email.find(queryObj)
     .sort(sort)
     .then((receiver) => {
-      if (receiver.length === 0) { 
+      if (receiver.length === 0) {
         return res.status(404).json({
           message: "Empty box",
         });
       }
-  
+
       const startIndex = (num - 1) * limit;
       const endIndex = startIndex + limit;
 
@@ -171,7 +162,7 @@ exports.issend = function (req, res, next) {
 
       res.status(200).json({
         status: "success",
-        count: Math.ceil(receiver.length/limit), // calculate and send the count by dividing the length by the limit and then rounding up to the nearest integer
+        count: Math.ceil(receiver.length / limit), // calculate and send the count by dividing the length by the limit and then rounding up to the nearest integer
         receiver: pagedReceiver,
       });
     })
@@ -182,8 +173,3 @@ exports.issend = function (req, res, next) {
       });
     });
 };
-
-
-  
-  
-
