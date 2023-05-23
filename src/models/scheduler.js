@@ -20,6 +20,7 @@ exports.Scheduler = mongoose.model(
     },
     description: {
       type: String,
+      default: "",
     },
     start: {
       type: Date,
@@ -31,6 +32,7 @@ exports.Scheduler = mongoose.model(
     },
     location: {
       type: String,
+      default: "",
     },
     approved: {
       type: String,
@@ -57,6 +59,7 @@ exports.validateScheduler = function (data) {
     end: Joi.date().required(),
     approved: Joi.string().valid("no", "yes", "notYet"),
     description: Joi.string(),
+    location: Joi.string(),
     received: Joi.boolean(),
   });
 

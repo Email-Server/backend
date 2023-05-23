@@ -116,7 +116,7 @@ exports.approve = async (req, res) => {
         oCalendar.attendees = [...oCalendar.attendees, scheduler.attendeeEmail];
         oCalendar = await oCalendar.save();
       } else {
-        return res.status(400).send("this user already approved");
+        return res.status(400).send("this schedule already approved");
       }
     }
 
